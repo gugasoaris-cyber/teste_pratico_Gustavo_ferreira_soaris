@@ -66,7 +66,7 @@ Opcional:
 - copiar `.env.example` para `.env`
 - ajustar `DATABASE_URL` se necessário
 
-## Execução rápida (recomendada)
+## Execução rápida (validação rapida do sistema)
 
 Pré-condição: Docker Desktop em execução.
 
@@ -80,7 +80,7 @@ Exemplos úteis:
 
 ```bash
 # Gera CSVs de amostra (200 linhas) antes de rodar ETL e carga
-python executar_etl_completo.py --gerar-dados 200
+python executar_etl_completo.py
 
 # Gera os CSVs completos (cenário Anexo I) antes de rodar ETL e carga
 python executar_etl_completo.py --gerar-dados completo
