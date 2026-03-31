@@ -115,7 +115,8 @@ python scripts/generate_servidores_200.py
 
 ```bash
 python main.py
-# Limita a N linhas por fonte na ETL
+
+# Limita a N linhas por fonte na ETL (exemplo abaixo está 2500 mas você pode colocar outros valores)
 python main.py --sample 2500
 ```
 
