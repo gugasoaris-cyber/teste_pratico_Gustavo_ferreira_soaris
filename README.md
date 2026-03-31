@@ -171,7 +171,7 @@ Observações importantes:
 - métricas de execução
 - carga Oracle em modelo normalizado
 
-## Documentação e painel (entrega)
+## Documentação e painel (extra)
 
 - Documento Word da entrega (requisitos, casos de uso, diagrama de fluxo...): `documentacao/documentacao.docx`
 - Fluxo visual do sistema: `documentacao/fluxo_sistema.png`
