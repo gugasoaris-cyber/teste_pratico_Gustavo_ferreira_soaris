@@ -47,7 +47,7 @@ docker compose version
 Na raiz do projeto:
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 Opcional:
