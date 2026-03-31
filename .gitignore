@@ -1,0 +1,9 @@
+# Saídas geradas da ETL (podem ser grandes; regenere com python main.py)
+data/processed/
+logs/
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+
+.env

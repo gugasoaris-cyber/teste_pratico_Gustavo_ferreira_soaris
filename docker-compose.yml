@@ -1,0 +1,22 @@
+services:
+  oracle:
+    image: gvenzl/oracle-xe:21-slim
+    container_name: pessoas_oracle
+    environment:
+      ORACLE_PASSWORD: oracle_admin_secret
+      APP_USER: etl
+      APP_USER_PASSWORD: etl_secret
+    ports:
+      - "1521:1521"
+    volumes:
+      - oracle_xe_data:/opt/oracle/oradata
+      - ./db/init:/container-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 15s
+      timeout: 5s
+      retries: 30
+      start_period: 120s
+
+volumes:
+  oracle_xe_data:
