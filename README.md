@@ -87,9 +87,17 @@ python executar_etl_completo.py --sample 1000
 # Carrega no Oracle sem truncar tabelas antes (incremental; evita apagar dados já carregados)
 python executar_etl_completo.py --no-truncate
 
+# Carga Oracle em lotes com retentativa/reconexão em falhas transitórias
+python scripts/load_oracle.py --batch-size 500 --max-retries 3 --retry-delay 3
+
+# Reinicia a carga do zero (ignora checkpoint da carga Oracle)
+python scripts/load_oracle.py --clear-load-checkpoint
+
 # Pula subir Docker/aguardar Oracle (use se o container já estiver rodando e saudável)
 python executar_etl_completo.py --skip-docker
 ```
+
+Observação: a carga Oracle usa, por padrão, **lotes de 500 em 500 registros** (`--batch-size 500`).
 
 ## Execução manual (passo a passo)
 
@@ -170,7 +178,7 @@ Observações importantes:
 - padronização e validação de dados
 - detecção de rejeições e duplicidades com relatório
 - deduplicação e merge por prioridade (`RH > eSocial > Gestão`)
-- retomada após falha via checkpoint
+- retomada após falha via checkpoint (ETL e carga Oracle)
 - métricas de execução
 - carga Oracle em modelo normalizado
 
