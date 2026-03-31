@@ -115,6 +115,8 @@ python scripts/generate_servidores_200.py
 
 ```bash
 python main.py
+# Limita a N linhas por fonte na ETL
+python main.py --sample 2500
 ```
 
 ### 4) Carregar no Oracle
