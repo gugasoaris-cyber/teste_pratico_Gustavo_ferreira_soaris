@@ -10,6 +10,10 @@ Atender ao cenário do teste prático com:
 - logs e evidências de qualidade de dados
 - carga final no Oracle XE via Docker
 
+Contexto de origem dos dados no projeto:
+- neste repositório, as fontes são arquivos `CSV` em `data/` (`rh.csv`, `esocial.csv`, `gestao.csv`);
+- em cenários reais, o mesmo fluxo pode receber dados de `CSV`, `API` ou tabelas de outros bancos.
+
 ## Tecnologias
 
 - Python 3
@@ -171,6 +175,17 @@ Observações importantes:
 - `logs/duplicidade_cpf.txt`
 - `logs/rejeitados.csv` (quando houver)
 - `logs/duplicados.csv` (quando houver)
+
+## Como os requisitos foram atendidos
+
+- **Normalização de dados:** padronização de tipos e formatos (CPF, datas, campos textuais) antes do merge e da carga.
+- **Integridade de dados:** validações de obrigatoriedade/domínio e uso de modelo relacional normalizado no Oracle (`pessoa`, `vinculo`, `evento`, catálogos).
+- **Detecção de erro com relatório:** geração de evidências em `logs/rejeitados.csv`, `logs/duplicados.csv` e `logs/duplicidade_cpf.txt`.
+- **Padronização de formatos:** saídas tratadas em `data/processed/` com estrutura consistente para consumo da carga Oracle.
+- **Robustez contra erros na execução:** retomada por checkpoint em duas camadas:
+  - ETL: `main.py` + `src/pipeline_resume.py` (estado em `logs/etl_pipeline_state.json` e artefatos em `data/processed/_checkpoint/`);
+  - carga Oracle: `scripts/load_oracle.py` (estado em `logs/oracle_load_state.json`, commit por lote, retry e reconexão).
+- **Métricas de execução:** consolidadas em `logs/etl_metrics.json`.
 
 ## Critérios atendidos (resumo)
 
