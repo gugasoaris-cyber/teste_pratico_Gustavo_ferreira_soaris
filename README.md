@@ -31,7 +31,7 @@ Atender ao cenário do teste prático com:
 
 ## Pré-requisitos
 
-1. Python 3 instalado
+1. Python 3.10, 3.11 ou 3.12 instalado (recomendado: 3.12)
 2. Docker Desktop instalado
 
 Validação rápida:
@@ -46,8 +46,16 @@ docker compose version
 
 Na raiz do projeto:
 
+> Se você estiver usando Python 3.13+ (ex.: 3.14), a instalação pode falhar no pacote `oracledb` no Windows por falta de wheel compatível.
+> Nesse caso, use Python 3.12 (recomendado) para evitar necessidade de compilação nativa.
+>
+> A virtualização (`venv`) é importante neste projeto porque a dependência `oracledb` (conexão com Oracle) pode falhar em versões mais novas do Python no Windows. Com ambiente virtual em Python 3.12, você fixa uma versão compatível para o Oracle e evita conflito com o Python global da máquina segue abaixo o codigo para fazer a virtualização.
 ```bash
-pip install -r requirements.txt
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python --version
+python -m pip --version
+python -m pip install -r requirements.txt
 ```
 
 Opcional:
@@ -123,7 +131,24 @@ python scripts/load_oracle.py
 - Usuário: `etl`
 - Senha: `etl_secret`
 
-No Power BI, pode ser necessário instalar o OCMT (Oracle Client for Microsoft Tools).
+### Erro comum no Power BI e como resolver
+
+Se ao atualizar no Power BI aparecer o erro:
+
+`DataSource.Error: Nenhum driver ODAC foi encontrado no sistema`
+
+faça os passos abaixo:
+
+1. Feche o Power BI Desktop.
+2. Instale o **Oracle Client for Microsoft Tools (OCMT) 64-bit**:
+   - https://go.microsoft.com/fwlink/p/?LinkID=272376
+3. Reabra o Power BI (se necessário, reinicie o Windows).
+4. Tente a atualização novamente.
+
+Observações importantes:
+- O Power BI Desktop e o driver Oracle devem ter a mesma arquitetura (64-bit).
+- Se o Oracle estiver em Docker, confirme que o container está rodando (`docker compose up -d`).
+- Em alguns cenários, instalar o ODAC/OCMT resolve esse erro imediatamente sem alterar o ETL.
 
 ## Saídas geradas
 
@@ -150,6 +175,6 @@ No Power BI, pode ser necessário instalar o OCMT (Oracle Client for Microsoft T
 
 - Documento Word da entrega (requisitos, casos de uso, diagrama de fluxo...): `documentacao/documentacao.docx`
 - Fluxo visual do sistema: `documentacao/fluxo_sistema.png`
-- Painel Power BI: `painel_powerBI/BI_servidores_VOBS.pbix`
+- Painel Power BI: `painel_powerBI/BI_servidores_VOBS.pbix` (se ocorrer erro de driver Oracle/ODAC, ver seção `Erro comum no Power BI e como resolver`)
 
 
